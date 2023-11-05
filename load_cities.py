@@ -3,10 +3,8 @@ import mysql.connector
 
 # Connect to the MySQL database
 cnx = mysql.connector.connect(
-    host='localhost',
-    user='gdscturk',
-    password='gdscturk',
-    database='gdscturk'
+    host='92.205.189.130',
+    port=3308,
 )
 cursor = cnx.cursor()
 

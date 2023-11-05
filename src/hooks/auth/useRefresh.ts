@@ -1,66 +1,63 @@
-import { refresh as refreshFn } from '../../services/auth';
-import { isErrorResponse } from '../../utils/utils';
-import { axiosSecure } from '../../services/axios';
-import { useUser } from '../../contexts/UserContext';
+import { refresh as refreshFn } from "../../services/auth";
+import { isErrorResponse } from "../../utils/utils";
+import { axiosSecure } from "../../services/axios";
+import { useUser } from "../../contexts/UserContext";
 
 export const useRefresh = () => {
-	const {user, dispatch} = useUser();
+  const { user } = useUser();
 
-	const token = {
-		accessToken: user?.accessToken,
-		refreshToken: user?.refreshToken,
-	}
+  const token = {
+    accessToken: user?.accessToken,
+    refreshToken: user?.refreshToken,
+  };
 
-	const refresh = async () => {
-		if (!token) {
-			return null;
-		}
+  const refresh = async () => {
+    if (!token) {
+      return null;
+    }
 
-		if(!token.refreshToken) {
-			return null;
-		}
+    if (!token.refreshToken) {
+      return null;
+    }
 
-		const res = await refreshFn(token.refreshToken, axiosSecure);
+    const res = await refreshFn(token.refreshToken, axiosSecure);
 
-		if (isErrorResponse(res)) {
-			return res;
-		}
-		
-		dispatch({type: "UPDATE_USER", payload: {
-			accessToken: res.data.accessToken ? res.data.accessToken : "",
-		}})
+    if (isErrorResponse(res)) {
+      return res;
+    }
 
-		return res;
-	};
+    return res;
+  };
 
-	return refresh;
+  return refresh;
 };
 
+export const useRefreshWithToken = (
+  accessToken: string,
+  refreshToken: string
+) => {
+  const token = {
+    accessToken: accessToken,
+    refreshToken: refreshToken,
+  };
 
-export const useRefreshWithToken = (accessToken: string, refreshToken: string) => {
+  const refresh = async () => {
+    if (!token) {
+      return null;
+    }
 
-	const token = {
-		accessToken: accessToken,
-		refreshToken: refreshToken,
-	}
+    if (!token.refreshToken) {
+      return null;
+    }
 
-	const refresh = async () => {
-		if (!token) {
-			return null;
-		}
+    const res = await refreshFn(token.refreshToken, axiosSecure);
 
-		if(!token.refreshToken) {
-			return null;
-		}
+    if (isErrorResponse(res)) {
+      return res;
+    }
 
-		const res = await refreshFn(token.refreshToken, axiosSecure);
+    return res;
+  };
 
-		if (isErrorResponse(res)) {
-			return res;
-		}
-
-		return res;
-	};
-
-	return refresh;
+  return refresh;
 };

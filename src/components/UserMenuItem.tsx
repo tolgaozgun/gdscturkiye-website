@@ -6,56 +6,55 @@ import { User } from "../types";
 import { useNavigate } from "react-router";
 
 interface UserMenuItemProps {
-    user?: User;
+  user?: User | null;
 }
 
-const UserMenuItem = ({user}: UserMenuItemProps) => {
+const UserMenuItem = ({ user }: UserMenuItemProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const navigate = useNavigate();
+  const handleProfileClick = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  if (!user) {
+    return <></>;
+  }
 
-    const handleProfileClick = () => {
-        setIsMenuOpen(!isMenuOpen);
-    }    
-    if (!user) {
-        return <></>
+  const handleLogout = () => {
+    navigate("/logout");
+  };
+
+  const handleSettings = () => {
+    switch (user.userType) {
+      case "LEAD":
+        navigate("/panel/lead/settings");
+        break;
+      case "ADMIN":
+        navigate("/panel/admin/settings");
+        break;
+      case "CORE_TEAM_MEMBER":
+        navigate("/panel/core-team-member/settings");
+        break;
+      case "FACILITATOR":
+        navigate("/panel/facilitator/settings");
+        break;
+      case "GOOGLER":
+        navigate("/panel/googler/settings");
+        break;
     }
+  };
 
-    const handleLogout = () => {
-        navigate('/logout');
-    }
-
-    const handleSettings = () => {
-        switch(user.userType){
-            case "LEAD":
-                navigate('/panel/lead/settings');
-                break;
-            case "ADMIN":
-                navigate('/panel/admin/settings');
-                break;
-            case "CORE_TEAM_MEMBER":
-                navigate('/panel/core-team-member/settings');
-                break;
-            case "FACILITATOR":
-                navigate('/panel/facilitator/settings');
-                break;
-            case "GOOGLER":
-                navigate('/panel/googler/settings');
-                break;
-        }
-    }
-
-    return (
-        <>
-        <UserButton
+  return (
+    <>
+      <UserButton
         image={user.profileImage}
         name={user.name + " " + user.surname}
         email={user.email}
         onClick={handleProfileClick}
-        />
-        {isMenuOpen && 
-            <Menu>
-                {/* <Menu.Item
+      />
+      {isMenuOpen && (
+        <Menu>
+          {/* <Menu.Item
                     icon={<IconHeart size="0.9rem" stroke={1.5} />}
                 >
                     Liked posts
@@ -89,16 +88,23 @@ const UserMenuItem = ({user}: UserMenuItemProps) => {
                 <Menu.Item color="red" icon={<IconTrash size="0.9rem" stroke={1.5} />}>
                     Delete account
                 </Menu.Item> */}
-                <Menu.Label>Settings</Menu.Label>
-                <Menu.Item icon={<IconSettings size="0.9rem" stroke={1.5} />} onClick={handleSettings}>
-                    Account settings
-                </Menu.Item>
-                <Menu.Item icon={<IconLogout size="0.9rem" stroke={1.5} />} onClick={handleLogout}>Logout</Menu.Item>
-
-            </Menu>
-        }
+          <Menu.Label>Settings</Menu.Label>
+          <Menu.Item
+            icon={<IconSettings size="0.9rem" stroke={1.5} />}
+            onClick={handleSettings}
+          >
+            Account settings
+          </Menu.Item>
+          <Menu.Item
+            icon={<IconLogout size="0.9rem" stroke={1.5} />}
+            onClick={handleLogout}
+          >
+            Logout
+          </Menu.Item>
+        </Menu>
+      )}
     </>
-    )
-}
+  );
+};
 
 export default UserMenuItem;

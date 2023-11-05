@@ -1,9 +1,7 @@
-import React, { createContext, useContext, useReducer, ReactNode } from 'react';
-import { User } from '../types';
-import { useToken } from '../hooks/auth/useToken';
-import useGetUser from '../hooks/auth/useGetUser';
-import useAxiosSecure, { useAxiosSecureWithToken } from '../hooks/auth/useAxiosSecure';
-
+import React, { createContext, useContext, ReactNode } from "react";
+import { User } from "../types";
+import useGetUser from "../hooks/auth/useGetUser";
+import useAxiosSecure from "../hooks/auth/useAxiosSecure";
 
 // Create an initial state for the user
 const initialUserState: User | null = null;
@@ -20,8 +18,9 @@ const UserContext = createContext<{
 });
 
 // Create a UserProvider component to wrap your app with the context
-export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-
+export const UserProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const axiosSecure = useAxiosSecure(false);
   const {
     data: data,
@@ -29,10 +28,14 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     isError: isError,
   } = useGetUser(axiosSecure);
 
-  let user = data? data.data : null;
+  let user = data ? data.data : null;
 
   return (
-    <UserContext.Provider value={{ user, isUserLoading: isLoading, isUserError: isError }}>{children}</UserContext.Provider>
+    <UserContext.Provider
+      value={{ user, isUserLoading: isLoading, isUserError: isError }}
+    >
+      {children}
+    </UserContext.Provider>
   );
 };
 
@@ -40,9 +43,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 export const useUser = () => {
   const context = useContext(UserContext);
   if (!context) {
-    throw new Error('useUser must be used within a UserProvider');
+    throw new Error("useUser must be used within a UserProvider");
   }
-
 
   return context;
 };
