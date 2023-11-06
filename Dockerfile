@@ -10,8 +10,8 @@ COPY . /app/
 ARG VITE_BACKEND_URL
 ARG VITE_BASE_NAME
 
-ENV VITE_BACKEND_URL=${VITE_BACKEND_URL}
-ENV VITE_BASE_NAME=${VITE_BASE_NAME}
+ENV VITE_BACKEND_URL=https://voluntracker.app/api/v2
+ENV VITE_BASE_NAME=/
 
 # Prepare the container for building React
 RUN npm install
