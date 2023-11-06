@@ -82,8 +82,13 @@ const useAxiosSecureWithToken = (accessToken: string, refreshToken: string) => {
 const useAxiosSecure = (shouldRedirect: boolean = true) => {
   const token = useToken();
   const refresh = useRefresh();
-  const navigate: NavigateFunction = useNavigate();
-  const location = useLocation();
+
+  let navigate: NavigateFunction | null;
+  let location;
+  if (shouldRedirect) {
+    navigate = useNavigate();
+    location = useLocation();
+  }
 
   // const token = {
   // 	accessToken: user?.accessToken,
@@ -97,7 +102,9 @@ const useAxiosSecure = (shouldRedirect: boolean = true) => {
           if (token == null) {
             if (shouldRedirect && location!.pathname !== "/login") {
               loginAgain();
-              navigate("/login");
+              if (navigate != null) {
+                navigate("/login");
+              }
             }
             return config;
           }
@@ -105,7 +112,9 @@ const useAxiosSecure = (shouldRedirect: boolean = true) => {
           if (token?.accessToken == null) {
             if (shouldRedirect && location!.pathname !== "/login") {
               loginAgain();
-              navigate("/login");
+              if (navigate != null) {
+                navigate("/login");
+              }
             }
             return config;
           }

@@ -1,4 +1,4 @@
-import { Image, Card, Center, SelectItem } from "@mantine/core";
+import { Card, Center, SelectItem } from "@mantine/core";
 import {
   IconBrandGoogle,
   IconClipboardText,
@@ -10,7 +10,6 @@ import { University } from "../../types/UniversityTypes";
 import LoadingPage from "../LoadingPage";
 import { UserType } from "../../types";
 import RegisterForm from "../../components/forms/auth/RegisterForm";
-import Banner from "../../assets/banner.png";
 
 const RegisterPage = () => {
   const {
@@ -62,7 +61,6 @@ const RegisterPage = () => {
   return (
     <Center miw={400}>
       <Card radius="md">
-        <Image src={Banner} />
         <RegisterForm
           universityData={universityData}
           userTypeData={userTypeData}
