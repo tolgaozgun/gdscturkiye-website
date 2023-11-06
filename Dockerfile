@@ -7,13 +7,6 @@ WORKDIR /app
 # Copy the React App to the container
 COPY . /app/
 
-ARG VITE_BACKEND_URL
-ARG VITE_BASE_NAME
-ARG TEST_VAR
-
-RUN echo "The value of VITE_BACKEND_URL is $VITE_BACKEND_URL"
-RUN echo "The value of VITE_BASE_NAME is $VITE_BASE_NAME"
-RUN echo "The value of TEST_VAR is $TEST_VAR"
 # Prepare the container for building React
 RUN npm install
 # RUN npm install react-scripts@3.0.1 -g
