@@ -1,1 +1,1 @@
-export const baseUrl = "https://voluntracker.app/api/v1";
+export const baseUrl = import.meta.env.VITE_BACKEND_URL;

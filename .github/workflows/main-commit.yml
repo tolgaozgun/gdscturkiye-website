@@ -5,11 +5,11 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -18,23 +18,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm run build --if-present
-
-      - name: Upload build artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: website-dev-artifact
-          path: .
-
-  publish:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@master
-        with:
-          name: website-dev-artifact
-          path: .
+      - run: npm run build
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
@@ -53,7 +37,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
   deploy:
-    needs: publish
+    needs: build-and-publish
     runs-on: ubuntu-latest
     steps:
       - name: Docker Pull & Run From DockerHub
@@ -68,5 +52,5 @@ jobs:
             docker pull gdscturkiye/website-main:latest
             docker stop gdscturkiye-website-main
             docker rm gdscturkiye-website-main
-            cd /home/tolgaozgun/gdscturkiye-main
+            cd /home/${{ secrets.SSH_USERNAME }}/gdscturkiye-main
             docker-compose up -d
