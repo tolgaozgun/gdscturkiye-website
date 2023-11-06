@@ -39,6 +39,7 @@ jobs:
         env:
           VITE_BACKEND_URL: ${{ vars.VITE_BACKEND_URL }}
           VITE_BASE_NAME: ${{ vars.VITE_BASE_NAME }}
+          TEST_VAR: TEST_VAR
 
   deploy:
     needs: build-and-publish

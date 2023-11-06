@@ -9,6 +9,7 @@ COPY . /app/
 
 RUN echo "The value of VITE_BACKEND_URL is $VITE_BACKEND_URL"
 RUN echo "The value of VITE_BASE_NAME is $VITE_BASE_NAME"
+RUN echo "The value of TEST_VAR is $TEST_VAR"
 # Prepare the container for building React
 RUN npm install
 # RUN npm install react-scripts@3.0.1 -g
