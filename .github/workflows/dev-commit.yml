@@ -36,7 +36,7 @@ jobs:
           dockerfile: Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          buildArgs: VITE_BACKEND_URL=${{ vars.VITE_BACKEND_URL }},VITE_BASE_NAME=${{ vars.VITE_BASE_NAME }}
+          buildArgs: VITE_BACKEND_URL=${{ vars.VITE_BACKEND_URL }},VITE_BASE_NAME=${{ vars.VITE_BASE_NAME }},TEST_VAR=TESTVAR
 
   deploy:
     needs: build-and-publish
