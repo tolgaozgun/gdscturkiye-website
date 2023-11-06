@@ -7,6 +7,7 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+    environment: main
     strategy:
       matrix:
         node-version: [18.x]
@@ -35,10 +36,14 @@ jobs:
           dockerfile: Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+          build-args: |
+            VITE_BACKEND_URL_ARG=${{ vars.VITE_BACKEND_URL_ARG }}
+            VITE_BASE_NAME_ARG=${{ vars.VITE_BASE_NAME_ARG }}
 
   deploy:
     needs: build-and-publish
     runs-on: ubuntu-latest
+    environment: main
     steps:
       - name: Docker Pull & Run From DockerHub
         uses: appleboy/ssh-action@v1.0.0
