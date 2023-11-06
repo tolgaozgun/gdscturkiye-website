@@ -7,6 +7,7 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+    environment: dev
     strategy:
       matrix:
         node-version: [18.x]
@@ -35,9 +36,11 @@ jobs:
           dockerfile: Dockerfile
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+          buildArgs: VITE_BACKEND_URL=${{ vars.VITE_BACKEND_URL }},VITE_BASE_NAME=${{ vars.VITE_BASE_NAME }}
 
   deploy:
     needs: build-and-publish
+    environment: dev
     runs-on: ubuntu-latest
     steps:
       - name: Docker Pull & Run From DockerHub
