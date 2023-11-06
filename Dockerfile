@@ -7,11 +7,11 @@ WORKDIR /app
 # Copy the React App to the container
 COPY . /app/
 
-ARG VITE_BACKEND_URL
-ARG VITE_BASE_NAME
+ARG VITE_BACKEND_URL_ARG
+ARG VITE_BASE_NAME_ARG
 
-ENV VITE_BACKEND_URL=https://voluntracker.app/api/v2
-ENV VITE_BASE_NAME=/
+ENV VITE_BACKEND_URL=${VITE_BACKEND_URL_ARG}
+ENV VITE_BASE_NAME={VITE_BASE_NAME_ARG}
 
 # Prepare the container for building React
 RUN npm install
