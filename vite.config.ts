@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "./",
+  base: "./dev",
   plugins: [react()],
   // Required for Docker containers
   server: {
