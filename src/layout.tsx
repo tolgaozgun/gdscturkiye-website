@@ -70,10 +70,6 @@ export const Layout = () => {
     // }
   ];
 
-  console.log("env variables:");
-  console.log(import.meta.env.VITE_BACKEND_URL);
-  console.log(import.meta.env.VITE_BASE_NAME);
-
   let header = <></>;
   let navbar = <></>;
 
