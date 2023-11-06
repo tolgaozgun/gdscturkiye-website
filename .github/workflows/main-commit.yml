@@ -52,5 +52,5 @@ jobs:
             docker pull gdscturkiye/website-main:latest
             docker stop gdscturkiye-website-main
             docker rm gdscturkiye-website-main
-            cd /home/tolgaozgun/gdscturkiye-main
+            cd /home/${{ secrets.SSH_USERNAME }}/gdscturkiye-main
             docker-compose up -d
