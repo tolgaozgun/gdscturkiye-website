@@ -16,7 +16,7 @@ export const Layout = () => {
 
   const [opened, setOpened] = useState(false);
 
-  const LeadPanelData:  = leadPanelData()
+  const LeadPanelData = leadPanelData();
 
   // const {
   // 	data: currentUser,
