@@ -23,6 +23,8 @@ import {
 import GDSCLogo from "../../assets/gdsc-logo.png";
 import { useNavigate } from "react-router";
 import { User, UserType } from "../../types";
+import LanguageSwitcher from "../LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -114,6 +116,7 @@ export function AppHeader({
   tabs,
   isLoggedIn = true,
 }: SecondHeaderProps) {
+  const { t } = useTranslation();
   const { classes, cx } = useStyles();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
@@ -181,7 +184,7 @@ export function AppHeader({
               navigate("/login");
             }}
           >
-            Sign In
+            {t("components:headers:app:signIn")}
           </UnstyledButton>
           <UnstyledButton
             className={cx(classes.user)}
@@ -189,7 +192,7 @@ export function AppHeader({
               navigate("/register");
             }}
           >
-            Register
+            {t("components:headers:app:register")}
           </UnstyledButton>
         </Group>
       </>
@@ -233,14 +236,16 @@ export function AppHeader({
             </UnstyledButton>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Label>Settings</Menu.Label>
+            <Menu.Label>
+              {t("components:headers:app:settingsLabel")}
+            </Menu.Label>
             <Menu.Item
               icon={<IconUser size="0.9rem" stroke={1.5} />}
               onClick={() => {
                 handleTabClick("/panel/" + userTypeSlug + "/settings/user");
               }}
             >
-              User Settings
+              {t("components:headers:app:userSettings")}
             </Menu.Item>
             <Menu.Item
               icon={<IconSettings size="0.9rem" stroke={1.5} />}
@@ -250,13 +255,13 @@ export function AppHeader({
                 );
               }}
             >
-              {userTypeString} Settings
+              {userTypeString} {t("components:headers:app:settingsLabel")}
             </Menu.Item>
             <Menu.Item
               icon={<IconLogout size="0.9rem" stroke={1.5} />}
               onClick={handleLogout}
             >
-              Logout
+              {t("components:headers:app:logout")}
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
@@ -274,6 +279,8 @@ export function AppHeader({
             height={28}
             width={60}
           />
+          
+          <LanguageSwitcher />
           {userBar}
         </Group>
       </Container>
@@ -298,7 +305,7 @@ export function AppHeader({
                     handleTabClick("/panel/lead");
                   }}
                 >
-                  Lead Panel
+                  {t("components:headers:app:leadPanel")}
                 </Tabs.Tab>
               )}
               {user && user.userType == UserType.Facilitator && (
@@ -309,7 +316,7 @@ export function AppHeader({
                     handleTabClick("/panel/facilitator");
                   }}
                 >
-                  Facilitator Panel
+                  {t("components:headers:app:facilitatorPanel")}
                 </Tabs.Tab>
               )}
               {user && user.userType == UserType.CoreTeamMember && (
@@ -320,7 +327,7 @@ export function AppHeader({
                     handleTabClick("/panel/core-team");
                   }}
                 >
-                  Core Team Panel
+                  {t("components:headers:app:coreTeamPanel")}
                 </Tabs.Tab>
               )}
               {user && user.userType == UserType.Admin && (
@@ -331,7 +338,7 @@ export function AppHeader({
                     handleTabClick("/panel/admin");
                   }}
                 >
-                  Admin Panel
+                  {t("components:headers:app:adminPanel")}
                 </Tabs.Tab>
               )}
             </Flex>

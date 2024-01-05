@@ -22,20 +22,19 @@ const MainPage = () => {
     <>
       <HeroComponent
         bg={HeroBg}
-        title="Google Developer Student Clubs Türkiye"
-        description="Google Developer Student Clubs are university based community groups for students interested in Google developer technologies. Students from all undergraduate or graduate programs with an interest in growing as a developer are welcome. By joining a GDSC, students grow their knowledge in a peer-to-peer learning environment and build solutions for local businesses and their community."
-        buttons={["Sign In", "Learn More"]}
+        title={t("pages:main:heroTitle")}
+        description={t("pages:main:heroDescription")}
+        buttons={[t("pages:main:heroSignInButton"), t("pages:main:heroLearnMoreButton")]}
       />
 
       <Container mt={30} mb={30} size="xl">
         <Center>
           <Stack>
             <Title mb={10} align="center" weight={700} size={40}>
-              Universities
+              {t("pages:main:universitiesSectionTitle")}
             </Title>
             <Text size={20} mb={20}>
-              Explore the universities that have Google Developer Student Clubs
-              in Türkiye.
+              {t("pages:main:universitiesSectionDescription")}
             </Text>
           </Stack>
         </Center>
@@ -49,7 +48,7 @@ const MainPage = () => {
         <Center>
           <Stack>
             <Title mb={20} align="center" weight={700} size={40}>
-              Upcoming Activities
+              {t("pages:main:upcomingActivitiesTitle")}
             </Title>
           </Stack>
         </Center>
@@ -60,7 +59,7 @@ const MainPage = () => {
         <Center>
           <Stack>
             <Title mb={20} align="center" weight={700} size={40}>
-              Gallery
+              {t("pages:main:galleryTitle")}
             </Title>
           </Stack>
         </Center>

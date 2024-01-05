@@ -31,6 +31,7 @@ export type AskQuestion = {
 }
 
 export type QuestionReply = {
+    replyId: number;
     questionId: number;
     reply: string;
     votes: number;

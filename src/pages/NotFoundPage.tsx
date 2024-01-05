@@ -1,5 +1,6 @@
 import { createStyles, Title, Text, Button, Container, Group, rem } from '@mantine/core';
 import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -40,6 +41,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const NotFoundPage = () => {
+  const { t } = useTranslation();
   const { classes } = useStyles();
   const navigate = useNavigate();
 
@@ -49,15 +51,18 @@ const NotFoundPage = () => {
 
   return (
     <Container className={classes.root}>
-      <div className={classes.label}>404</div>
-      <Title className={classes.title}>You have found a secret place.</Title>
+      <div className={classes.label}>
+        {t('pages:notFound:error404')}
+      </div>
+      <Title className={classes.title}>
+        {t('pages:notFound:secretPlaceTitle')}
+      </Title>
       <Text color="dimmed" size="lg" align="center" className={classes.description}>
-        Unfortunately, this is only a 404 page. You may have mistyped the address, or the page has
-        been moved to another URL.
+        {t('pages:notFound:errorDescription')}
       </Text>
       <Group position="center">
         <Button variant="subtle" size="md" onClick={handleClick}>
-          Take me back to home page
+          {t("pages:notFound:backToHomePage")}
         </Button>
       </Group>
     </Container>

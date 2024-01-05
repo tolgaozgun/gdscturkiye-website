@@ -1,0 +1,33 @@
+{
+    "buddyTeamSize": "Buddy Team Size",
+    "unableToRetrieveData": "Unable to retrieve data",
+    "totalActivitiesCompleted": "Total Activites Completed",
+    "timeAsLeader": "Time as a Leader",
+    "coreTeamSize": "Core Team Size",
+    "upcomingEvents": "Upcoming Events",
+    "totalBuddyTeamMeetings": "Total Buddy Team Meetings",
+    "notInBuddyTeam": "Not in a buddy team",
+    "notFound": "Not found",
+    "months": {
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December",
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August"
+    },
+    "eventsLabel": "Events",
+    "absencesLabel": "Absences",
+    "monthlyRequiredActivitiesCompleted": "Monthly required activities completed",
+    "weeklyBuddyTeamMeetingsAttended": "Weekly buddy team meetings attended",
+    "pastEvents": "Past Events",
+    "buddyTeamMeetingAttendances": "Buddy Team Meeting Attendances",
+    "dashboardTitle": "Dashboard"
+  }
+  

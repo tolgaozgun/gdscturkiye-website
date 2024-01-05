@@ -1,10 +1,8 @@
 
 import {
-	ActionIcon,
 	Card,
 	Flex,
 	Group,
-	Menu,
 	Space,
 	Text,
 	Title,
@@ -12,13 +10,11 @@ import {
 	rem,
     Image,
     Container,
-    Stack,
 } from '@mantine/core';
-import { IconDots, IconEye, IconFileZip, IconTrash } from '@tabler/icons-react';
 import { UserModel } from '../../types';
 import { University } from '../../types/UniversityTypes';
 import moment from 'moment';
-import { withTheme } from '@emotion/react';
+import { useTranslation } from 'react-i18next';
 
 const useStyle = createStyles(theme => ({
 	section: {
@@ -36,6 +32,7 @@ interface ProfileCardProps {
 }
 
 export function ProfileCard({user, university, withBorder}: ProfileCardProps) {
+    const { t } = useTranslation();
 	const { classes } = useStyle();
 
 	return (
@@ -74,15 +71,16 @@ export function ProfileCard({user, university, withBorder}: ProfileCardProps) {
             {/* <Grid.Col xs={12} md={6}> */}
                 <Container>
                     <Text c="dimmed" tt="uppercase" fw={700} fz="xs">
-                        Last Login
+                        {t("components:cards:profile:lastLogin")}
                     </Text>
                     <Text fw={700} fz="xl">
-                        {user.lastLoginDate ? moment(user.lastLoginDate).fromNow(): 'Never'}
+                        {user.lastLoginDate ? moment(user.lastLoginDate).fromNow(): 
+                        t("components:cards:profile:never")}
                     </Text>
                 </Container>
                 <Container mt={30}>
                     <Text c="dimmed" tt="uppercase" fw={700} fz="xs">
-                        City
+                        {t("components:cards:profile:city")}
                     </Text>
                     <Text fw={700} fz="xl">
                         {university.city.name}
@@ -90,7 +88,7 @@ export function ProfileCard({user, university, withBorder}: ProfileCardProps) {
                 </Container>
                 <Container mt={30}>
                     <Text c="dimmed" tt="uppercase" fw={700} fz="xs">
-                        Country
+                        {t("components:cards:profile:country")}
                     </Text>
                     <Text fw={700} fz="xl">
                         {university.country.name}

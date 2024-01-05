@@ -3,18 +3,20 @@ import { Outlet, useLocation } from "react-router-dom";
 import { PanelNavbar } from "./components/menus/navbar/PanelNavbar";
 import { AppHeader } from "./components/header/AppHeader";
 import { AdminPanelData } from "./components/menus/navbar/AdminPanelData";
-import { LeadPanelData } from "./components/menus/navbar/LeadPanelData";
 import { FacilitatorPanelData } from "./components/menus/navbar/FacilitatorPanelData";
 import { useUser } from "./contexts/UserContext";
 import { CoreTeamPanelData } from "./components/menus/navbar/CoreTeamPanelData";
 import { PanelHeader } from "./components/header/PanelHeader";
 import { useState } from "react";
+import leadPanelData from "./components/menus/navbar/LeadPanelData";
 
 export const Layout = () => {
   const { pathname } = useLocation();
   let { user, isUserLoading, isUserError } = useUser();
 
   const [opened, setOpened] = useState(false);
+
+  const LeadPanelData:  = leadPanelData()
 
   // const {
   // 	data: currentUser,

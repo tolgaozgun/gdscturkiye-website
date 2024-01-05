@@ -6,10 +6,12 @@ import LeadAttendanceTable from '../../../components/table/LeadAttendanceTable';
 import LoadingPage from '../../LoadingPage';
 import { LeadAttendance } from '../../../types/AttendaceTypes';
 import { IconExclamationMark } from '@tabler/icons-react';
-
+import { useTranslation } from 'react-i18next';
 
 
 const LeadPanelAttendancePage = () => {
+	const { t } = useTranslation();
+	
 	const axiosSecure = useAxiosSecure();
 
 	let {
@@ -30,7 +32,10 @@ const LeadPanelAttendancePage = () => {
 		return <LoadingPage />
 	}
 
-	let content = <Alert variant='outline' color="red" title="Error" icon={<IconExclamationMark/>}>Attendance information not found. You may be not invited to the buddy team. If you believe this is an error please contant administrator.</Alert>;
+	let content = (
+	<Alert variant='outline' color="red" title={t("pages:panel:lead:attendance:error")} icon={<IconExclamationMark/>}>
+		{t("pages:panel:lead:attendance:attendanceInformationNotFound")}
+	</Alert>);
 
 	if (attendanceExists) {
 		content = (
@@ -42,7 +47,8 @@ const LeadPanelAttendancePage = () => {
 	
 
 	return (
-		<PageContainer title="Attendance List">
+		<PageContainer
+			title={t("pages:panel:lead:attendance:attendanceListTitle")}>
 			{content}
 		</PageContainer>
 	);

@@ -1,0 +1,33 @@
+{
+    "buddyTeamSize": "Buddy Takımı Boyutu",
+    "unableToRetrieveData": "Veri alınamıyor",
+    "totalActivitiesCompleted": "Tamamlanan Toplam Aktiviteler",
+    "timeAsLeader": "Lider Olarak Geçirilen Zaman",
+    "coreTeamSize": "Core Team Boyutu",
+    "upcomingEvents": "Yaklaşan Etkinlikler",
+    "totalBuddyTeamMeetings": "Toplam Arkadaş Takımı Toplantıları",
+    "notInBuddyTeam": "Buddy Team içerisinde değil",
+    "notFound": "Bulunamadı",
+    "months": {
+      "september": "Eylül",
+      "october": "Ekim",
+      "november": "Kasım",
+      "december": "Aralık",
+      "january": "Ocak",
+      "february": "Şubat",
+      "march": "Mart",
+      "april": "Nisan",
+      "may": "Mayıs",
+      "june": "Haziran",
+      "july": "Temmuz",
+      "august": "Ağustos"
+    },
+    "eventsLabel": "Etkinlikler",
+    "absencesLabel": "Devamsızlıklar",
+    "monthlyRequiredActivitiesCompleted": "Aylık Tamamlanan Aktiviteler",
+    "weeklyBuddyTeamMeetingsAttended": "Haftalık Buddy Team Toplantılarına Katılım",
+    "pastEvents": "Geçmiş Etkinlikler",
+    "buddyTeamMeetingAttendances": "Buddy Team Toplantı Katılımları",
+    "dashboardTitle": "Kontrol Paneli"
+  }
+  

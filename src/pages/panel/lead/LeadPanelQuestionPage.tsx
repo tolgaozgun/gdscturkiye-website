@@ -2,52 +2,20 @@ import React, { useState } from 'react';
 import { Avatar, Card, Text, Group, Button, Textarea, Select, Box, ActionIcon } from '@mantine/core';
 
 import { IconArrowUp, IconArrowDown } from "@tabler/icons-react";
-import { Question } from '../../../types/QuestionTypes';
-
-// Sample data for a single question
-const questionData = {
-  id: 1,
-  author: { name: 'Jane Doe', image: 'path_to_author_image' },
-  postedDate: '2023-01-05',
-  title: 'What is the best way to learn React?',
-  description: 'Looking for resources and strategies to effectively learn React.',
-  replies: [
-    {
-      id: 1,
-      author: { name: 'John Smith', image: 'path_to_reply_author_image' },
-      content: 'I found interactive tutorials to be the most effective.',
-      postedDate: '2023-01-06',
-      votes: 10,
-    },
-    {
-      id: 2,
-      author: { name: 'John Smith', image: 'path_to_reply_author_image' },
-      content: 'I found interactive tutorials to be the most effective.',
-      postedDate: '2023-01-03',
-      votes: 9,
-    },
-    {
-      id: 3,
-      author: { name: 'John Smith', image: 'path_to_reply_author_image' },
-      content: 'I found interactive tutorials to be the most effective.',
-      postedDate: '2023-01-02',
-      votes: 14,
-    },
-    // ... more replies
-  ],
-};
+import { Question, QuestionReply } from '../../../types/QuestionTypes';
+import moment from 'moment';
 
 const LeadPanelQuestionPage = (question: Question) => {
     
-  const [replies, setReplies] = useState(questionData.replies);
+  const [replies, setReplies] = useState<Array<QuestionReply>>(question.replies);
   const [newReply, setNewReply] = useState('');
   const [sortMethod, setSortMethod] = useState('date'); // 'date' or 'vote'
 
   const handleVote = (replyId: number, vote: number) => {
     // Add logic to update the vote count for the reply
     // For now, just updating the state
-    const updatedReplies = replies.map((reply) => {
-      if (reply.id === replyId) {
+    const updatedReplies = replies.map((reply: QuestionReply) => {
+      if (reply.replyId === replyId) {
         return { ...reply, votes: reply.votes + vote };
       }
       return reply;
@@ -58,33 +26,34 @@ const LeadPanelQuestionPage = (question: Question) => {
   const postReply = () => {
     // Add logic to post the reply
     // For now, just adding a dummy reply to the state
-    const newReplyData = {
-      id: replies.length + 1,
-      author: { name: 'New User', image: 'path_to_new_user_image' },
-      content: newReply,
-      postedDate: new Date().toISOString().slice(0, 10),
-      votes: 0,
-    };
-    setReplies([...replies, newReplyData]);
-    setNewReply('');
+    // const newReplyData: QuestionReply = {
+    //   id: replies.length + 1,
+    //   author: { name: 'New User', image: 'path_to_new_user_image' },
+    //   content: newReply,
+    //   postedDate: new Date().toISOString().slice(0, 10),
+    //   votes: 0,
+    // };
+    // setReplies([...replies, newReplyData]);
+    // setNewReply('');
   };
 
   const sortedReplies = [...replies].sort((a, b) => {
     if (sortMethod === 'vote') {
       return b.votes - a.votes;
     }
-    return new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime();
+    return new Date(b.answeredDate).getTime() - new Date(a.answeredDate).getTime();
   });
 
   return (
     <div>
     <Card shadow="sm" p="lg" radius="md" withBorder>
       <Group>
-        <Avatar src={questionData.author.image} alt={questionData.author.name} />
+        <Avatar src={question.askedBy.profileImage} alt={question.askedBy.name} />
         <div>
-          <Text weight={700}>{questionData.title}</Text>
-          <Text size="sm">{questionData.description}</Text>
-          <Text size="xs" color="dimmed">Posted by {questionData.author.name} on {questionData.postedDate}</Text>
+          <Text weight={700}>{question.title}</Text>
+          <Text size="sm">{question.question}</Text>
+          # Moment the date relatively not exact time, use ago
+          <Text size="sm" color="dimmed">Posted by {question.askedBy.name} {question.askedBy.surname} {moment(question.askedDate).fromNow()}</Text>
         </div>
       </Group>
     </Card>
@@ -106,19 +75,19 @@ const LeadPanelQuestionPage = (question: Question) => {
         <Card key={reply.id} shadow="sm" p="lg" radius="md" mt="md" withBorder>
           <Group position="apart">
             <Group>
-              <Avatar src={reply.author.image} alt={reply.author.name} />
+              <Avatar src={reply.answeredBy.profileImage} alt={reply.answeredBy.name} />
               <div>
-                <Text weight={500}>{reply.author.name}</Text>
-                <Text size="sm" color="dimmed">Replied on {reply.postedDate}</Text>
-                <Text mt="sm">{reply.content}</Text>
+                <Text weight={500}>{reply.answeredBy.name} {reply.answeredBy.surname}</Text>
+                <Text size="sm" color="dimmed">Replied on {moment(reply.answeredDate).fromNow()}</Text>
+                <Text mt="sm">{reply.reply}</Text>
               </div>
             </Group>
             <Box>
-              <ActionIcon onClick={() => handleVote(reply.id, 1)}>
+              <ActionIcon onClick={() => handleVote(reply.replyId, 1)}>
                 <IconArrowUp size={16} />
               </ActionIcon>
               <Text align="center" size="sm">{reply.votes}</Text>
-              <ActionIcon onClick={() => handleVote(reply.id, -1)}>
+              <ActionIcon onClick={() => handleVote(reply.replyId, -1)}>
                 <IconArrowDown size={16} />
               </ActionIcon>
             </Box>

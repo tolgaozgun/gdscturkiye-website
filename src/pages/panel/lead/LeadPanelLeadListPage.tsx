@@ -8,16 +8,15 @@ import { LeadModel } from '../../../types';
 import { PageContainer } from '../../../components/PageContainer';
 import useGetLeads from '../../../hooks/user/useGetLeads';
 import LeadMap from '../../../components/maps/LeadMap';
+import { useTranslation } from 'react-i18next';
 
 
 type CurrentDisplayType = 'grid' | 'list' | 'map';
 
 const LeadPanelLeadListPage = () => {
-
+	const { t } = useTranslation();
 	const axiosSecure = useAxiosSecure();
-
 	const [currentDisplayType, setCurrentDisplayType] = useState<CurrentDisplayType>('grid');
-	
 
 	const handleSelectGrid = () => {
 		setCurrentDisplayType('grid');
@@ -48,7 +47,16 @@ const LeadPanelLeadListPage = () => {
 
 	// let facilitator: FacilitatorModel[] = [buddyTeams.facilitator];
 
-	let content = <Alert mt="md" variant='outline' color="red" title="Error" icon={<IconExclamationMark/>}>No leads found.</Alert>;
+	let content = 
+	<Alert 
+		mt="md" 
+		variant='outline' 
+		color="red" 
+		title={t("pages:panel:lead:leadList:errorAlertTitle")} 
+		icon={<IconExclamationMark/>}
+	>
+		{t("pages:panel:lead:leadList:errorAlertMessage")}
+	</Alert>;
 
 	if (leadExists) {
 		if (currentDisplayType == 'grid') {
@@ -78,13 +86,13 @@ const LeadPanelLeadListPage = () => {
 			{ leadExists &&
 			<Button.Group defaultValue="grid">
 				<Button disabled={currentDisplayType == 'grid'} leftIcon={<IconGridDots size="1rem" />} value="grid" onClick={handleSelectGrid} variant="default">
-					Grid
+					{t("pages:panel:lead:leadList:gridButton")}
 				</Button>
 				<Button disabled={currentDisplayType == 'list'} leftIcon={<IconList size="1rem" />} value="list" onClick={handleSelectList} variant="default">
-					List
+					{t("pages:panel:lead:leadList:listButton")}
 				</Button>
 				<Button disabled={currentDisplayType == 'map'} leftIcon={<IconMap size="1rem" />} value="map" onClick={handleSelectMap} variant="default">
-					Map
+					{t("pages:panel:lead:leadList:mapButton")}
 				</Button>
 			</Button.Group>
 			}

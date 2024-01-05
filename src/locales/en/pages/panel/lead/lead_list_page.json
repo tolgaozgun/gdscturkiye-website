@@ -1,0 +1,9 @@
+{
+    "errorAlertTitle": "Error",
+    "errorAlertMessage": "No leads found.",
+    "pageTitle": "Leads",
+    "gridButton": "Grid",
+    "listButton": "List",
+    "mapButton": "Map"
+  }
+  

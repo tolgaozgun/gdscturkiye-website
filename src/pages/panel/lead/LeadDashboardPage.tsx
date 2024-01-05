@@ -16,6 +16,7 @@ import useAxiosSecure from "../../../hooks/auth/useAxiosSecure";
 import LoadingLottie from "../../../components/common/other/LoadingLottie";
 import useGetEventsByCurrentUserUniversity from "../../../hooks/event/useGetEventsByCurrentUserUniversity";
 import { Activity } from "../../../types/EventTypes";
+import { useTranslation } from "react-i18next";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -30,6 +31,7 @@ const useStyles = createStyles((theme) => ({
 const LeadDashboardPage = () => {
   const axiosSecure = useAxiosSecure();
   const { classes } = useStyles();
+  const { t } = useTranslation();
 
   const {
     data: dashboardData,
@@ -45,43 +47,43 @@ const LeadDashboardPage = () => {
 
   let data = [
     {
-      title: "Buddy Team Size",
-      value: "Unable to retrieve data",
+      title: t("pages:panel:lead:dashboard:buddyTeamSize"),
+      value: t("pages:panel:lead:dashboard:unableToRetrieveData"),
     },
     {
-      title: "Total Activites Completed",
-      value: "Unable to retrieve data",
+      title: t("pages:panel:lead:dashboard:totalActivitiesCompleted"),
+      value: t("pages:panel:lead:dashboard:unableToRetrieveData"),
     },
     {
-      title: "Time as a Leader",
-      value: "Unable to retrieve data",
+      title: t("pages:panel:lead:dashboard:timeAsLeader"),
+      value: t("pages:panel:lead:dashboard:unableToRetrieveData"),
     },
     {
-      title: "Core Team Size",
-      value: "Unable to retrieve data",
+      title: t("pages:panel:lead:dashboard:coreTeamSize"),
+      value: t("pages:panel:lead:dashboard:unableToRetrieveData"),
     },
     {
-      title: "Upcoming Events",
-      value: "Unable to retrieve data",
+      title: t("pages:panel:lead:dashboard:upcomingEvents"),
+      value: t("pages:panel:lead:dashboard:unableToRetrieveData"),
     },
     {
-      title: "Total Buddy Team Meetings",
-      value: "Unable to retrieve data",
+      title: t("pages:panel:lead:dashboard:totalBuddyTeamMeetings"),
+      value: t("pages:panel:lead:dashboard:unableToRetrieveData"),
     },
   ];
   let labels = [
-    "September",
-    "October",
-    "November",
-    "December",
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
+    t("pages:panel:lead:dashboard:months:september"),
+    t("pages:panel:lead:dashboard:months:october"),
+    t("pages:panel:lead:dashboard:months:november"),
+    t("pages:panel:lead:dashboard:months:december"),
+    t("pages:panel:lead:dashboard:months:january"),
+    t("pages:panel:lead:dashboard:months:february"),
+    t("pages:panel:lead:dashboard:months:march"),
+    t("pages:panel:lead:dashboard:months:april"),
+    t("pages:panel:lead:dashboard:months:may"),
+    t("pages:panel:lead:dashboard:months:june"),
+    t("pages:panel:lead:dashboard:months:july"),
+    t("pages:panel:lead:dashboard:months:august")
   ];
   let monthlyEventCount = 0;
   let noOfBuddyTeamMeetings = 0;
@@ -136,31 +138,31 @@ const LeadDashboardPage = () => {
 
     data = [
       {
-        title: "Buddy Team Size",
+        title: t("pages:panel:lead:dashboard:buddyTeamSize"),
         value: dashboardData.data.buddyTeamSize
           ? dashboardData.data.buddyTeamSize.toString()
-          : "Not in a buddy team",
+          : t("pages:panel:lead:dashboard:notInBuddyTeam"),
       },
       {
-        title: "Total Activites Completed",
+        title: t("pages:panel:lead:dashboard:totalActivitiesCompleted"),
         value: pastEvents.length.toString(),
       },
       {
-        title: "Time as a Leader",
+        title: t("pages:panel:lead:dashboard:timeAsLeader"),
         value: dashboardData.data.promotedAt
           ? dashboardData.data.promotedAt.toString()
-          : "Not found",
+          : t("pages:panel:lead:dashboard:notFound"),
       },
       {
-        title: "Core Team Size",
+        title: t("pages:panel:lead:dashboard:coreTeamSize"),
         value: dashboardData.data.coreTeamSize.toString(),
       },
       {
-        title: "Upcoming Events",
+        title: t("pages:panel:lead:dashboard:upcomingEvents"),
         value: futureEvents.length.toString(),
       },
       {
-        title: "Total Buddy Team Meetings",
+        title: t("pages:panel:lead:dashboard:totalBuddyTeamMeetings"),
         value: noOfBuddyTeamMeetings.toString(),
       },
     ];
@@ -170,7 +172,7 @@ const LeadDashboardPage = () => {
     labels,
     datasets: [
       {
-        label: "Events",
+        label: t("pages:panel:lead:dashboard:eventsLabel"),
         data: datasetEvents,
         tension: 0.4,
         borderColor: "#3BC9DB",
@@ -183,7 +185,7 @@ const LeadDashboardPage = () => {
     labels,
     datasets: [
       {
-        label: "Absences",
+        label: t("pages:panel:lead:dashboard:absencesLabel"),
         data: datasetAttendances,
         tension: 0.4,
         borderColor: "#FF8C00",
@@ -230,7 +232,8 @@ const LeadDashboardPage = () => {
   }
 
   return (
-    <PageContainer title="Dashboard">
+    <PageContainer 
+      title={t("pages:panel:lead:dashboard:dashboardTitle")}>
       <div className={classes.root}>
         <Grid>
           <Grid.Col xs={12} md={6}>
@@ -253,7 +256,7 @@ const LeadDashboardPage = () => {
               })}
             >
               <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
-                Monthly required activities completed
+              {t("pages:panel:lead:dashboard:monthlyRequiredActivitiesCompleted")}
               </Text>
               <Text fz="lg" fw={500}>
                 {monthlyEventCount} / 2
@@ -278,7 +281,7 @@ const LeadDashboardPage = () => {
               })}
             >
               <Text fz="xs" tt="uppercase" fw={700} c="dimmed">
-                Weekly buddy team meetings attended
+              {t("pages:panel:lead:dashboard:weeklyBuddyTeamMeetingsAttended")}
               </Text>
               <Text fz="lg" fw={500}>
                 {totalAttendance} / {noOfBuddyTeamMeetings}
@@ -303,19 +306,19 @@ const LeadDashboardPage = () => {
             withBorder
             data={dataEvents}
             options={options}
-            name="Past Events"
+            name={t("pages:panel:lead:dashboard:pastEvents")}
           />
           <OverviewCard
             withBorder
             data={dataAbsences}
             options={options}
-            name="Buddy Team Meeting Attendances"
+            name={t("pages:panel:lead:dashboard:buddyTeamMeetingAttendances")}
           />
           <OverviewCard
             withBorder
             data={dataEvents}
             options={options}
-            name="Upcoming Events"
+            name={t("pages:panel:lead:dashboard:upcomingEvents")}
           />
         </SimpleGrid>
       </div>

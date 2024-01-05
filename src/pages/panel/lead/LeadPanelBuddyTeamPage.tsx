@@ -10,10 +10,12 @@ import { FacilitatorModel, LeadModel } from '../../../types';
 import { PageContainer } from '../../../components/PageContainer';
 import useGetBuddyTeamByCurrentLead from '../../../hooks/buddy-team/useGetBuddyTeamByCurrentUser';
 import { BuddyTeam } from '../../../types/BuddyTeamTypes';
-
+import { useTranslation } from 'react-i18next';
 
 
 const LeadPanelBuddyTeamPage = () => {
+
+	const { t } = useTranslation();
 
 	const axiosSecure = useAxiosSecure();
 
@@ -45,7 +47,15 @@ const LeadPanelBuddyTeamPage = () => {
 
 	let facilitator: FacilitatorModel[] = [buddyTeam.facilitator];
 
-	let content = <Alert variant='outline' color="red" title="Error" icon={<IconExclamationMark/>}>You are not in a buddy team.</Alert>;
+	let content = 
+	<Alert 
+		variant='outline' 
+		color="red" 
+		title={t("pages:panel:lead:buddyTeam:errorAlertTitle")}
+		icon={<IconExclamationMark/>}
+	>
+		{t("pages:panel:lead:buddyTeam:errorAlertMessage")}
+	</Alert>;
 
 	if (buddyTeamExists) {
 		if (useGrid) {
@@ -65,14 +75,14 @@ const LeadPanelBuddyTeamPage = () => {
 
 
 	return (
-		<PageContainer title="Buddy Team">
+		<PageContainer title={t("pages:panel:lead:buddyTeam:pageContainerTitle")}>
 			{ buddyTeamExists &&
 			<Button.Group defaultValue="grid">
 				<Button disabled={useGrid} leftIcon={<IconGridDots size="1rem" />} value="grid" onClick={handleSelectGrid} variant="default">
-					Grid
+					{t("pages:panel:lead:buddyTeam:buttonGridLabel")}
 				</Button>
 				<Button disabled={!useGrid} leftIcon={<IconList size="1rem" />} value="list" onClick={handleSelectList} variant="default">
-					List
+					{t("pages:panel:lead:buddyTeam:buttonListLabel")}
 				</Button>
 			</Button.Group>
 			}

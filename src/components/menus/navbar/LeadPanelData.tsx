@@ -13,96 +13,105 @@ import {
     IconHome,
     IconConfetti,
   } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 
-export const LeadPanelData: PanelItem[] = [
-    { label: 'Back to Home Page', icon: IconHome, link: '/' },
-    { label: 'Dashboard', icon: IconGauge, link: '/panel/lead/dashboard' },
+const leadPanelData = () => {
+  const { t } = useTranslation();
+
+
+  return [
+    { label: t("components:menus:navbar:leadPanel:backToHomePage"), icon: IconHome, link: '/' },
+    { label: t('components:menus:navbar:leadPanel:dashboard'), icon: IconGauge, link: '/panel/lead/dashboard' },
     {
-      label: 'My Core Team',
+      label: t("components:menus:navbar:leadPanel:myCoreTeam"),
       link: '/panel/lead/core-team',
       icon: IconUsersGroup,
       links: [
-        { label: 'List Users', link: '/panel/lead/core-team/my' },
-        { label: 'Invite a User', link: '/panel/lead/core-team/invite' },
+        { label: t("components:menus:navbar:leadPanel:listUsers"), link: '/panel/lead/core-team/my' },
+        { label: t("components:menus:navbar:leadPanel:inviteUser"), link: '/panel/lead/core-team/invite' },
       ],
     },
     {
-      label: 'My Buddy Team',
+      label: t("components:menus:navbar:leadPanel:myBuddyTeam"),
       link: '/panel/lead/buddy-teams',
       icon: IconChalkboard,
       links: [
-        { label: 'View Buddy Team', link: '/panel/lead/buddy-teams/my' },
-        { label: 'Attendance', link: '/panel/lead/buddy-teams/attendance' },
-        { label: 'List All Buddy Teams', link: '/panel/lead/buddy-teams/all' },
+        { label: t("components:menus:navbar:leadPanel:viewBuddyTeam"), link: '/panel/lead/buddy-teams/my' },
+        { label: t("components:menus:navbar:leadPanel:attendance"), link: '/panel/lead/buddy-teams/attendance' },
+        { label: t("components:menus:navbar:leadPanel:listAllBuddyTeams"), link: '/panel/lead/buddy-teams/all' },
       ],
     },
     {
-      label: 'Events',
+      label: t("components:menus:navbar:leadPanel:events"),
       link: '/panel/lead/events',
       icon: IconConfetti,
       links: [
-        { label: 'My Events', link: '/panel/lead/events/my' },
-        { label: 'List All Events', link: '/panel/lead/events/all' },
+        { label: t("components:menus:navbar:leadPanel:myEvents"), link: '/panel/lead/events/my' },
+        { label: t("components:menus:navbar:leadPanel:listAllEvents"),link: '/panel/lead/events/all' },
       ],
     },
     {
-      label: 'Campaigns',
+      label: t("components:menus:navbar:leadPanel:campaigns"),
       link: '/panel/lead/campaigns', 
       icon: IconBrandCampaignmonitor,
       links: [
-        { label: 'List Current Campaigns', link: '/panel/lead/campaigns/current' },
-        { label: 'List All Campaigns', link: '/panel/lead/campaigns/all' },
+        { label: t("components:menus:navbar:leadPanel:listCurrentCampaigns"), link: '/panel/lead/campaigns/current' },
+        { label: t("components:menus:navbar:leadPanel:listAllCampaigns"), link: '/panel/lead/campaigns/all' },
       ],
     },
     {
-      label: 'Leads',
+      label: t("components:menus:navbar:leadPanel:leads"),
       link: '/panel/lead/leads',
       icon: IconUserCircle,
       links: [
-        { label: 'All Leads', link: '/panel/lead/leads/all' },
+        { label: t("components:menus:navbar:leadPanel:allLeads"), link: '/panel/lead/leads/all' },
       ],
     },
     {
-      label: 'Universities',
+      label: t("components:menus:navbar:leadPanel:universities"),
       link: '/panel/lead/universities',
       icon: IconSchool,
       links: [
-        { label: 'All Universities', link: '/panel/lead/universities/all' },
+        { label: t("components:menus:navbar:leadPanel:allUniversities"), link: '/panel/lead/universities/all' },
       ],
     },
     {
-      label: 'Cities',
+      label: t("components:menus:navbar:leadPanel:cities"),
       link: '/panel/lead/cities',
       icon: IconTree,
       links: [
-        { label: 'List Cities', link: '/panel/lead/cities/list' },
+        { label: t("components:menus:navbar:leadPanel:listCities"), link: '/panel/lead/cities/list' },
       ],
     },
     {
-      label: 'Countries',
+      label: t("components:menus:navbar:leadPanel:countries"),
       link: '/panel/lead/countries',
       icon: IconFlag,
       links: [
-        { label: 'List Countries', link: '/panel/lead/countries/list' },
+        { label: t("components:menus:navbar:leadPanel:listCountries"), link: '/panel/lead/countries/list' },
       ],
     },
     {
-      label: 'Questions',
+      label: t("components:menus:navbar:leadPanel:questions"),
       link: '/panel/lead/questions',
       icon: IconQuestionMark,
       links: [
-        { label: 'List Questions', link: '/panel/lead/questions/list' },
-        { label: 'Ask a Question', link: '/panel/lead/questions/ask' },
+        { label: t("components:menus:navbar:leadPanel:listQuestions"), link: '/panel/lead/questions/list' },
+        { label: t("components:menus:navbar:leadPanel:askQuestion"), link: '/panel/lead/questions/ask' },
       ],
     },
     {
-      label: 'Settings',
+      label: t("components:menus:navbar:leadPanel:settings"),
       link: '/panel/lead/settings',
       icon: IconAdjustments,
       links: [
-        { label: 'User Settings', link: '/panel/lead/settings/user' },
-        { label: 'Lead Settings', link: '/panel/lead/settings/lead' },
-        { label: 'Preferences', link: '/panel/lead/settings/preferences' },
+        { label: t("components:menus:navbar:leadPanel:userSettings"), link: '/panel/lead/settings/user' },
+        { label: t("components:menus:navbar:leadPanel:leadSettings"), link: '/panel/lead/settings/lead' },
+        { label: t("components:menus:navbar:leadPanel:preferences"), link: '/panel/lead/settings/preferences' },
       ],
     },
   ];
+
+}
+
+export default leadPanelData;
