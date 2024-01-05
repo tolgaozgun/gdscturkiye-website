@@ -1,48 +1,40 @@
-import { Avatar, Text, Paper } from '@mantine/core';
-import { LeadModel } from '../../types';
+import { Avatar, Badge, Card, Group, Space, Text } from '@mantine/core';
+import { Question } from '../../types/QuestionTypes';
+import { MouseEventHandler } from 'react';
 
-interface UserInfoActionProps {
-  lead: LeadModel;
-  isUsedInMap?: boolean
+interface QuestionCardProps {
+  question: Question;
+  clickAction?: MouseEventHandler<HTMLDivElement>;
 }
 
-const QuestionCard = ({ lead, isUsedInMap }: UserInfoActionProps) => {
-
-    const topics = lead.user.interests?.map((topic) => (topic.name + ", "))
-
-    // remove the last two characters from the last element on the array if exists
-    if (topics?.length > 0) {
-      topics[topics.length - 1] = topics[topics.length - 1].slice(0, -2);
-    }
+const QuestionCard = ({ question, clickAction }: QuestionCardProps) => {
 
 
   return (
-    <Paper
-      radius="md"
-      withBorder
-      h={isUsedInMap ? 170 : 250}
-      p="lg"
-      sx={(theme) => ({
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-      })}
-    >
-      <Avatar src={lead.user.profileImage} size={120} radius={120} mx="auto" />
-      <Text ta="center" fz="lg" weight={500} mt="md">
-        {lead.user.name} {lead.user.surname}
+    <Card key={question.questionId} shadow="sm" p="lg" radius="md" withBorder onClick={clickAction}>
+      <Group position="apart">
+        <Group>
+          <Avatar src={question.askedBy.profileImage} alt={question.askedBy.name} />
+          <div>
+            <Text weight={500}>{question.askedBy.name + " " + question.askedBy.surname}</Text>
+            <Text size="sm" color="dimmed">{question.askedDate.getTime()}</Text>
+          </div>
+        </Group>
+        <Badge color="pink" variant="light">
+          {question.category.name}
+        </Badge>
+      </Group>
+
+      <Text weight={700} mt="md">
+        {question.title}
       </Text>
-      <Text ta="center" c="dimmed" fz="sm">
-        {lead.university.name} • {lead.university.city.name}, {lead.university.country.name} 
+      <Text size="sm" mt="sm">
+        {question.question}
       </Text>
 
-        <Text ta="center" fz="sm" mt="md">
-            {topics}
-        </Text>
-
-{/* 
-      <Button variant="default" fullWidth mt="md">
-        Send message
-      </Button> */}
-    </Paper>
+      <Space h="md" />
+      <Text size="sm" color="dimmed">Replies: {question.replies.length}</Text>
+    </Card>
   );
 }
 

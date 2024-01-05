@@ -64,6 +64,9 @@ import LeadPanelAllEventsPage from "./pages/panel/lead/event/LeadPanelAllEventsP
 import LeadPanelAllBuddyTeamsPage from "./pages/panel/lead/LeadPanelAllBuddyTeamsPage.tsx";
 import LeadPanelLeadListPage from "./pages/panel/lead/LeadPanelLeadListPage.tsx";
 import LeadPanelLeadSettings from "./pages/panel/lead/LeadPanelLeadSettings.tsx";
+import LeadPanelQuestionListPage from "./pages/panel/lead/LeadPanelQuestionListPage.tsx";
+import './i18n';
+
 
 const router = createBrowserRouter(
   [
@@ -327,7 +330,7 @@ const router = createBrowserRouter(
             },
             {
               path: "/panel/lead/questions/list",
-              element: <NotFoundPage />,
+              element: <LeadPanelQuestionListPage />,
             },
             {
               path: "/panel/lead/questions/ask",
@@ -398,6 +401,7 @@ const router = createBrowserRouter(
     basename: import.meta.env.VITE_BASE_NAME,
   }
 );
+
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(

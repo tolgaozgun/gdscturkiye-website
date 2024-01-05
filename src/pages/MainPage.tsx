@@ -6,8 +6,10 @@ import VerticalImageGrid from "../components/VerticalImageGrid";
 import ActivitiesCarousel from "../components/ActivitesCarousel";
 import useGetUniversities from "../hooks/university/useGetUniversities";
 import { University } from "../types/UniversityTypes";
+import { useTranslation } from "react-i18next";
 
 const MainPage = () => {
+  const { t } = useTranslation();
   const { data: universitiesData, isLoading: isUniversitiesLoading } =
     useGetUniversities();
 

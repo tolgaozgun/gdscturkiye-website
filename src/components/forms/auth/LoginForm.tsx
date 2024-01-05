@@ -14,8 +14,10 @@ import { login } from "../../../services/auth";
 import { useMutation } from "@tanstack/react-query";
 import SubtleLinkButton from "../../buttons/SubtleLinkButton";
 import Cookies from "js-cookie";
+import { useTranslation } from "react-i18next";
 
 const LoginForm = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   // const { user, isUserLoading, isUserError } = useUser();
   const form = useForm({
@@ -25,9 +27,9 @@ const LoginForm = () => {
     },
 
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email."),
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : t('components:forms:login:invalidEmail')),
       password: (value) =>
-        value === "" ? "Can't leave password field empty" : null,
+        value === "" ? t('components:forms:login:emptyPassword') : null,
     },
   });
 
@@ -41,8 +43,8 @@ const LoginForm = () => {
 
       notifications.show({
         id: "login-success",
-        title: "Login successful!",
-        message: "You have successfully logged in!",
+        title: t('components:forms:login:loginSuccessful'),
+        message: t('components:forms:login:successfullyLoggedIn'),
         autoClose: 5000,
         withCloseButton: true,
         style: { backgroundColor: "green" },
@@ -77,10 +79,10 @@ const LoginForm = () => {
     onError: (error: any) => {
       notifications.show({
         id: "login-fail",
-        title: "Login failed!",
+        title: t('components:forms:login:loginFailed'),
         message: error.response
           ? error.response.data.msg
-          : "Something went wrong",
+          : t('components:forms:login:somethingWentWrong'),
         autoClose: 5000,
         withCloseButton: true,
         style: { backgroundColor: "red" },
@@ -106,21 +108,21 @@ const LoginForm = () => {
   return (
     <Stack spacing={"md"}>
       <Title size="28px" align="center">
-        Log in to your account
+        {t('components:forms:login:logInToYourAccount')}
       </Title>
       <SubtleLinkButton to="/register">
-        Don't have an account? Register
+        {t('components:forms:login:dontHaveAccount')}
       </SubtleLinkButton>
       <form>
         <Flex direction={"column"} gap={"xs"}>
           <TextInput
-            label="Email"
-            placeholder="your@email.com"
+            label={t('components:forms:login:emailLabel')}
+            placeholder={t('components:forms:login:emailPlaceholder')}
             {...form.getInputProps("email")}
           />
           <PasswordInput
-            label="Password"
-            placeholder="Your password"
+            label={t('components:forms:login:passwordLabel')}
+            placeholder={t('components:forms:login:passwordPlaceholder')}
             {...form.getInputProps("password")}
           />
           <Button
@@ -128,11 +130,11 @@ const LoginForm = () => {
             loaderPosition="left"
             onClick={onLogin}
           >
-            Login
+            {t('components:forms:login:loginButton')}
           </Button>
           <Flex direction={"row"} justify={"space-between"} align={"center"}>
             <SubtleLinkButton to="/forgot-password" size="sm">
-              Forgot Password?
+            {t('components:forms:login:forgotPassword')}
             </SubtleLinkButton>
           </Flex>
         </Flex>

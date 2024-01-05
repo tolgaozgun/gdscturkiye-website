@@ -4,12 +4,14 @@ import LogoutLottie from '../components/common/other/LogoutLottie';
 import { useQuery } from '@tanstack/react-query';
 import CheckLottie from '../components/common/other/CheckLottie';
 import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 interface LoadingPageProps {
 	message?: string;
 }
 
 const LogoutPage = ({ message }: LoadingPageProps) => {
+	const { t } = useTranslation();
 
 	const {logout} = useLogout();
 	const navigate = useNavigate();
@@ -21,8 +23,7 @@ const LogoutPage = ({ message }: LoadingPageProps) => {
 	});
 
 	if (res?.data) {
-		message = 'Logged out successfully! Redirecting to main page..';
-		// Wait 2 second
+		message = t('pages:loading:success');
 		setTimeout(() => {
 			navigate(0)
 			navigate("/")
@@ -41,7 +42,7 @@ const LogoutPage = ({ message }: LoadingPageProps) => {
 				}
 				<Text size={22} color="blue">
 					{' '}
-					{message || 'Logging out..'}
+					{message || t('pages:loading:message')}
 				</Text>
 			</Stack>
 		</Center>

@@ -10,12 +10,24 @@ export async function login(email: string, password: string): Promise<Response<U
 	const res = await axios.post<Response<User>>(`${baseUrl}/auth/login`, {
 		email,
 		password,
+	})
+	.catch((err) => {
+		if (err.response) {
+			return err.response;
+		}
+		return err;
 	});
 	return res.data;
 }
 
 export async function logout() {
-	const res = await axios.post<Response<null>>(`${baseUrl}/auth/logout`);
+	const res = await axios.post<Response<null>>(`${baseUrl}/auth/logout`)
+	.catch((err) => {
+		if (err.response) {
+			return err.response;
+		}
+		return err;
+	})
 	return res.data;
 }
 
@@ -25,7 +37,13 @@ export async function registerLead(
 	const res = await axios.post<Response<User>>(
 		`${baseUrl}/auth/register/lead`,
 		userDetails,
-	);
+	)
+	.catch((err) => {
+		if (err.response) {
+			return err.response;
+		}
+		return err;
+	});
 	return res.data;
 }
 
@@ -35,7 +53,13 @@ export async function registerGoogler(
 	const res = await axios.post<Response<User>>(
 		`${baseUrl}/auth/register/googler`,
 		userDetails,
-	);
+	)
+	.catch((err) => {
+		if (err.response) {
+			return err.response;
+		}
+		return err;
+	});
 	return res.data;
 }
 
@@ -45,7 +69,13 @@ export async function registerAdmin(
 	const res = await axios.post<Response<User>>(
 		`${baseUrl}/auth/register/admin`,
 		userDetails,
-	);
+	)
+	.catch((err) => {
+		if (err.response) {
+			return err.response;
+		}
+		return err;
+	});
 	return res.data;
 }
 
@@ -55,7 +85,13 @@ export async function registerFacilitator(
 	const res = await axios.post<Response<User>>(
 		`${baseUrl}/auth/register/facilitator`,
 		userDetails,
-	);
+	)
+	.catch((err) => {
+		if (err.response) {
+			return err.response;
+		}
+		return err;
+	});
 	return res.data;
 }
 
@@ -65,7 +101,13 @@ export async function registerCoreTeam(
 	const res = await axios.post<Response<User>>(
 		`${baseUrl}/auth/register/core-team`,
 		userDetails,
-	);
+	)
+	.catch((err) => {
+		if (err.response) {
+			return err.response;
+		}
+		return err;
+	});
 	return res.data;
 }
 
@@ -78,16 +120,34 @@ export async function refresh(
 		headers: {
 			Authorization: `Bearer ${refreshToken}`,
 		},
+	})
+	.catch((err) => {
+		if (err.response) {
+			return err.response;
+		}
+		return err;
 	});
 	return res.data;
 }
 
 export async function getCurrentUser(axiosSecure: AxiosInstance): Promise<Response<User>> {
-	const res = await axiosSecure.get<Response<User>>(`${baseUrl}/auth/current-user`);
+	const res = await axiosSecure.get<Response<User>>(`${baseUrl}/auth/current-user`)
+	.catch((err) => {
+		if (err.response) {
+			return err.response;
+		}
+		return err;
+	});
 	return res.data;
 }
 
 export async function getCurrentUserWithRole(axiosSecure: AxiosInstance): Promise<Response<UserWithRole>> {
-	const res = await axiosSecure.get<Response<UserWithRole>>(`${baseUrl}/auth/current-user-with-role`);
+	const res = await axiosSecure.get<Response<UserWithRole>>(`${baseUrl}/auth/current-user-with-role`)
+	.catch((err) => {
+		if (err.response) {
+			return err.response;
+		}
+		return err;
+	});
 	return res.data;
 }

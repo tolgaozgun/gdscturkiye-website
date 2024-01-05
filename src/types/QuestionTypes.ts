@@ -6,10 +6,12 @@ export type Question = {
     question: string;
     answer?: string;
     askedBy: UserModel;
+    replies: QuestionReply[];
     answeredBy?: UserModel;
     askedDate: Date;
     answeredDate?: Date;
     category: QuestionCategory;
+    votes: number;
 }
 
 export type QuestionCategory = {
@@ -26,4 +28,12 @@ export type AnswerQuestion = {
 
 export type AskQuestion = {
     question: string;
+}
+
+export type QuestionReply = {
+    questionId: number;
+    reply: string;
+    votes: number;
+    answeredBy: UserModel;
+    answeredDate: Date;
 }

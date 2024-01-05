@@ -12,10 +12,13 @@ import {
 	rem,
     Image,
     Container,
+    Stack,
 } from '@mantine/core';
 import { IconDots, IconEye, IconFileZip, IconTrash } from '@tabler/icons-react';
 import { UserModel } from '../../types';
 import { University } from '../../types/UniversityTypes';
+import moment from 'moment';
+import { withTheme } from '@emotion/react';
 
 const useStyle = createStyles(theme => ({
 	section: {
@@ -36,13 +39,10 @@ export function ProfileCard({user, university, withBorder}: ProfileCardProps) {
 	const { classes } = useStyle();
 
 	return (
-		<Card 
+        <Group >
+		<Card
             withBorder={withBorder}
             radius="md">
-                <Group position='apart'>
-            {/* <Grid> */}
-                {/* <Grid.Col xs={12} md={6}> */}
-			<Card.Section className={classes.section}>
                 <Image 
                     width={100}
                     height={100}
@@ -65,16 +65,19 @@ export function ProfileCard({user, university, withBorder}: ProfileCardProps) {
                         {university.name}
 					</Text>
 				</Flex>
-			</Card.Section>
+        </Card>
+        
+		<Card
+        withBorder={withBorder}
+        radius="md">
             {/* </Grid.Col> */}
             {/* <Grid.Col xs={12} md={6}> */}
-            <Flex align="end" justify="end" direction="column">
                 <Container>
                     <Text c="dimmed" tt="uppercase" fw={700} fz="xs">
                         Last Login
                     </Text>
                     <Text fw={700} fz="xl">
-                        {user.lastLoginDate ? user.lastLoginDate.toString() : 'Never'}
+                        {user.lastLoginDate ? moment(user.lastLoginDate).fromNow(): 'Never'}
                     </Text>
                 </Container>
                 <Container mt={30}>
@@ -93,50 +96,7 @@ export function ProfileCard({user, university, withBorder}: ProfileCardProps) {
                         {university.country.name}
                     </Text>
                 </Container>
-            </Flex>
-            <Menu withinPortal shadow="sm">
-                <Menu.Target>
-                    <ActionIcon>
-                        <IconDots size="1rem" />
-                    </ActionIcon>
-                </Menu.Target>
-
-                <Menu.Dropdown>
-                    <Menu.Item icon={<IconFileZip size={rem(14)} />}>Action One</Menu.Item>
-                    <Menu.Item icon={<IconEye size={rem(14)} />}>Action Two</Menu.Item>
-                    <Menu.Item icon={<IconTrash size={rem(14)} />} color="red">
-                        Action Three
-                    </Menu.Item>
-                </Menu.Dropdown>
-            </Menu>
-            </Group>
-
-            {/* </Grid.Col> */}
-            {/* </Grid> */}
-
-			{/* <Card.Section className={classes.section}>
-				<Group position="apart" grow>
-					<Stack spacing={4}>
-						<Text fz="sm" fw="500">
-							Balance
-						</Text>
-						<Title order={3}>$9821</Title>
-					</Stack>
-					<Stack spacing={4}>
-						<Text fz="sm" fw="500">
-							Chain
-						</Text>
-						<Title order={3}>Etherum</Title>
-					</Stack>
-				</Group>
-			</Card.Section>
-
-			<Card.Section className={classes.section}>
-				<Group position="center">
-					<Button variant="light">Deposit</Button>
-					<Button>Buy/Sell</Button>
-				</Group>
-			</Card.Section> */}
-		</Card>
+			</Card>
+        </Group>
 	);
 }

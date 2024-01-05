@@ -19,6 +19,7 @@ import { isErrorResponse } from '../../../utils/utils';
 import { notifications } from '@mantine/notifications';
 import { useNavigate } from 'react-router';
 import { useVerifyEmail } from '../../../hooks/verification/useVerifyEmail';
+import { useTranslation } from 'react-i18next';
   
   const useStyles = createStyles((theme) => ({
     title: {
@@ -47,6 +48,7 @@ import { useVerifyEmail } from '../../../hooks/verification/useVerifyEmail';
   }
   
   export function VerifyEmailForm({email, token}: VerifyEmailFormProps) {
+    const { t } = useTranslation();
     const { classes } = useStyles();
     const { verify } = useVerifyEmail();
     const navigate = useNavigate();
@@ -57,9 +59,9 @@ import { useVerifyEmail } from '../../../hooks/verification/useVerifyEmail';
 		},
 
 		validate: {
-			email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email.'),
-      verificationCode: (value) => (value === '' ? "Can't leave verification code field empty" : null),
-		},
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : t("components:forms:verifyEmail:invalidEmail")),
+      verificationCode: (value) => (value === '' ? t("components:forms:verifyEmail:emptyVerificationCode") : null),
+    },
 	});
 
     const onVerify = async () => {
@@ -78,7 +80,7 @@ import { useVerifyEmail } from '../../../hooks/verification/useVerifyEmail';
 		if (isErrorResponse(res)) {
 			notifications.show({
 				id: 'verify-fail',
-				title: 'Verify email failed!',
+        title: t("components:forms:verifyEmail:verifyEmailFailedTitle"),
 				message: res.msg,
 				autoClose: 5000,
 				withCloseButton: true,
@@ -93,10 +95,9 @@ import { useVerifyEmail } from '../../../hooks/verification/useVerifyEmail';
 
 		notifications.show({
 			id: 'verify-success',
-			title: 'Verify successful!',
-			message:
-				'We have successfully verified your email! We are redirecting you to the login page...',
-			autoClose: 5000,
+			title: t("components:forms:verifyEmail:verifyEmailSuccessTitle"),
+      message: t("components:forms:verifyEmail:verifyEmailSuccessMessage"),
+      autoClose: 5000,
 			withCloseButton: true,
 			style: { backgroundColor: 'green' },
 			styles: (theme) => ({
@@ -118,36 +119,36 @@ import { useVerifyEmail } from '../../../hooks/verification/useVerifyEmail';
     return (
       <Container size={460} my={30}>
         <Title className={classes.title} align="center">
-          Haven't verified your email?
+          {t("components:forms:verifyEmail:verifyEmailTitle")}
         </Title>
         <Text c="dimmed" fz="sm" ta="center">
-          Enter your verification code
+          {t("components:forms:verifyEmail:verificationCodePlaceholder")}
         </Text>
   
         <Paper withBorder shadow="md" p={30} radius="md" mt="xl">
             <form>
           <TextInput 
-            label="Your email" 
+            label={t("components:forms:verifyEmail:yourEmailLabel")} 
             placeholder="email@email.com" 
             {...form.getInputProps('email')}
              />
              <TextInput 
-               label="Your verification code" 
+               label={t("components:forms:verifyEmail:yourVerificationCodeLabel")} 
                {...form.getInputProps('verificationCode')}
                 />
           <Group position="apart" mt="lg" className={classes.controls}>
             <Anchor onClick={onBackToLogin} color="dimmed" size="sm" className={classes.control}>
               <Center inline>
                 <IconArrowLeft size={rem(12)} stroke={1.5} />
-                <Box ml={5}>Back to the login page</Box>
+                <Box ml={5}>{t("components:forms:verifyEmail:backToLoginPage")}</Box>
               </Center>
             </Anchor>
             <Anchor onClick={onForwardToVerify} color="dimmed" size="sm" className={classes.control}>
               <Center inline>
-                <Box ml={5}>I don't have a code</Box>
+                <Box ml={5}>{t("components:forms:verifyEmail:noVerificationCode")}</Box>
               </Center>
             </Anchor>
-            <Button onClick={onVerify} className={classes.control}>Send verification code</Button>
+            <Button onClick={onVerify} className={classes.control}>{t("components:forms:verifyEmail:sendVerificationCodeButton")}</Button>
           </Group>
           </form>
         </Paper>

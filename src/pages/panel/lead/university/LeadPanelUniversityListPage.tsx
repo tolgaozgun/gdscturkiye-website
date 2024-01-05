@@ -74,7 +74,7 @@ const LeadPanelUniversityListPage = () => {
 
 
 	return (
-		<PageContainer title="Leads">
+		<PageContainer title="Universities">
 			{ universityExists &&
 			<Button.Group defaultValue="grid">
 				<Button disabled={currentDisplayType == 'grid'} leftIcon={<IconGridDots size="1rem" />} value="grid" onClick={handleSelectGrid} variant="default">

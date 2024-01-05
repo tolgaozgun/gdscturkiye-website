@@ -19,6 +19,7 @@ import { useForm } from '@mantine/form';
 import { isErrorResponse } from '../../../utils/utils';
 import { notifications } from '@mantine/notifications';
 import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
   
   const useStyles = createStyles((theme) => ({
     title: {
@@ -46,6 +47,7 @@ import { useNavigate } from 'react-router';
   }
   
   export function SendEmailVerificationForm({email}: SendEmailVerificationFormProps) {
+    const { t } = useTranslation();
     const { classes } = useStyles();
     const { resendVerification } = useResendEmailVerification();
     const navigate = useNavigate();
@@ -56,7 +58,7 @@ import { useNavigate } from 'react-router';
 		},
 
 		validate: {
-			email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email.'),
+			email: (value) => (/^\S+@\S+$/.test(value) ? null : t("components:forms:sendEmailVerification:invalidEmail")),
 		},
 	});
 
@@ -75,7 +77,7 @@ import { useNavigate } from 'react-router';
 		if (isErrorResponse(res)) {
 			notifications.show({
 				id: 'resend-fail',
-				title: 'Resend email failed!',
+        title: t("components:forms:sendEmailVerification:resendFailedTitle"),
 				message: res.msg,
 				autoClose: 5000,
 				withCloseButton: true,
@@ -90,10 +92,9 @@ import { useNavigate } from 'react-router';
 
 		notifications.show({
 			id: 'resend-success',
-			title: 'Resend successful!',
-			message:
-				'We have successfully resent your verification email! We are redirecting you to the verification page...',
-			autoClose: 5000,
+      title: t("components:forms:sendEmailVerification:resendSuccessfulTitle"),
+      message: t("components:forms:sendEmailVerification:resendSuccessfulMessage"),
+      autoClose: 5000,
 			withCloseButton: true,
 			style: { backgroundColor: 'green' },
 			styles: (theme) => ({
@@ -115,31 +116,33 @@ import { useNavigate } from 'react-router';
     return (
       <Container size={460} my={30}>
         <Title className={classes.title} align="center">
-          Haven't verified your email?
+          {t("components:forms:sendEmailVerification:title")}
         </Title>
         <Text c="dimmed" fz="sm" ta="center">
-          Enter your email to get a verification code
+          {t("components:forms:sendEmailVerification:instruction")}
         </Text>
   
         <Paper withBorder shadow="md" p={30} radius="md" mt="xl">
             <form>
           <TextInput 
-            label="Your email" 
-            placeholder="me@mantine.dev"
+            label={t("components:forms:sendEmailVerification:emailLabel")} 
+            placeholder={t("components:forms:sendEmailVerification:emailPlaceholder")}
             {...form.getInputProps("email")} />
           <Group position="apart" mt="lg" className={classes.controls}>
             <Anchor onClick={onBackToLogin} color="dimmed" size="sm" className={classes.control}>
               <Center inline>
                 <IconArrowLeft size={rem(12)} stroke={1.5} />
-                <Box ml={5}>Back to the login page</Box>
+                <Box ml={5}>{t("components:forms:sendEmailVerification:backToLogin")}</Box>
               </Center>
             </Anchor>
             <Anchor onClick={onForwardToVerify} color="dimmed" size="sm" className={classes.control}>
               <Center inline>
-                <Box ml={5}>I already have a code</Box>
+              <Box ml={5}>{t("components:forms:sendEmailVerification:alreadyHaveCode")}</Box>
               </Center>
             </Anchor>
-            <Button onClick={sendVerification} className={classes.control}>Send verification code</Button>
+            <Button onClick={sendVerification} className={classes.control}>
+              {t("components:forms:sendEmailVerification:sendVerificationButton")}
+            </Button>
           </Group>
           </form>
         </Paper>

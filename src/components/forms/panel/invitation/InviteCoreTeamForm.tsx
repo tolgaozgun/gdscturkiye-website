@@ -38,6 +38,9 @@ const InviteCoreTeamForm = () => {
 			role: UserType.CoreTeamMember,
 		};
 		const res = await inviteFunc(registerInfo);
+		console.log(isErrorResponse(res));
+		console.log(res)
+
 		if (isErrorResponse(res)) {
 			notifications.show({
 				id: 'invite-fail',

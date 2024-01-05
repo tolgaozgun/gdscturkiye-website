@@ -12,7 +12,13 @@ export async function verifyEmail(
   const res = await axios.post<Response<string>>(
     `${baseUrl}/email-verification/verify`,
     verifyEmail
-  );
+  )
+	.catch((err) => {
+		if (err.response) {
+			return err.response;
+		}
+		return err;
+	});
   return res.data;
 }
 
@@ -22,6 +28,12 @@ export async function resendEmailVerification(
   const res = await axios.post<Response<string>>(
     `${baseUrl}/email-verification/resend`,
     emailResendRequest
-  );
+  )
+	.catch((err) => {
+		if (err.response) {
+			return err.response;
+		}
+		return err;
+	});
   return res.data;
 }

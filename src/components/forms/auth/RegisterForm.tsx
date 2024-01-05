@@ -39,6 +39,8 @@ import { useRegisterCoreTeam } from "../../../hooks/auth";
 import { useRegisterFacilitator } from "../../../hooks/auth/useRegisterFacilitator";
 import { useRegisterGoogler } from "../../../hooks/auth/useRegisterGoogler";
 
+import { useTranslation } from 'react-i18next';
+
 interface RegisterLeadProps {
   universityData: Array<SelectItem>;
   userTypeData: Array<SelectItem>;
@@ -49,6 +51,7 @@ interface UniversitySelectItemProps
   label: string;
   description: string;
 }
+
 
 const CustomUniversitySelectItem = forwardRef<
   HTMLDivElement,
@@ -74,15 +77,6 @@ interface UserTypeSelectItemProps
   description: string;
 }
 
-const requirements = [
-  { re: /[0-9]/, label: "Includes number" },
-  { re: /[a-z]/, label: "Includes lowercase letter" },
-  { re: /[A-Z]/, label: "Includes uppercase letter" },
-  { re: /[$&+,:;=?@#|'<>.^*()%!-]/, label: "Includes special symbol" },
-];
-
-const confirmRequirements = [{ re: "", label: "Passwords match" }];
-
 function PasswordRequirement({
   meets,
   label,
@@ -107,7 +101,10 @@ function PasswordRequirement({
   );
 }
 
-function getConfirmStrength(password: string, confirmPassword: string) {
+function getConfirmStrength (
+    confirmRequirements: Array<any>, 
+    password: string, 
+    confirmPassword: string) {
   let multiplier = password === confirmPassword ? 0 : 1;
   return Math.max(
     100 - (100 / (confirmRequirements.length + 1)) * multiplier,
@@ -115,7 +112,11 @@ function getConfirmStrength(password: string, confirmPassword: string) {
   );
 }
 
-function getStrength(password: string) {
+function getStrength(requirements: {
+    re: RegExp;
+    label: string;
+  }[],
+    password: string) {
   let multiplier = password.length > 5 ? 0 : 1;
 
   requirements.forEach((requirement) => {
@@ -144,6 +145,20 @@ const UserTypeSelectItem = forwardRef<HTMLDivElement, UserTypeSelectItemProps>(
 );
 
 const RegisterForm = ({ universityData, userTypeData }: RegisterLeadProps) => {
+  
+const { t } = useTranslation();
+
+
+const requirements = [
+  { re: /[0-9]/, label: t('components:forms:register:passwordRequirements:number') },
+  { re: /[a-z]/, label: t('components:forms:register:passwordRequirements:lowercase') },
+  { re: /[A-Z]/, label: t('components:forms:register:passwordRequirements:uppercase') },
+  { re: /[$&+,:;=?@#|'<>.^*()%!-]/, label: t('components:forms:register:passwordRequirements:specialSymbol') },
+];
+
+const confirmRequirements = [{ re: "", label: t('components:forms:register:passwordRequirements:passwordsMatch') }];
+
+  
   const form = useForm({
     initialValues: {
       name: "",
@@ -156,23 +171,23 @@ const RegisterForm = ({ universityData, userTypeData }: RegisterLeadProps) => {
       userType: UserType.Lead,
     },
     validate: {
-      name: (value) => (value === "" ? "Name cannot be left empty." : null),
+      name: (value) => (value === "" ? t('components:forms:register:validationMessages:nameEmpty') : null),
       surname: (value) =>
-        value === "" ? "Surname cannot be left empty." : null,
+        value === "" ? t('components:forms:register:validationMessages:surnameEmpty') : null,
       username: (value) =>
-        value === "" ? "Username cannot be left empty." : null,
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email."),
+        value === "" ? t('components:forms:register:validationMessages:usernameEmpty') : null,
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : t('components:forms:register:validationMessages:invalidEmail') ),
       password: (value) =>
-        value === "" ? "Password cannot be left empty." : null,
+        value === "" ? t('components:forms:register:validationMessages:passwordEmpty')  : null,
       confirmPassword: (value, values) =>
-        value !== values.password ? "Passwords did not match" : null,
+        value !== values.password ? t('components:forms:register:validationMessages:passwordsNotMatching')  : null,
       universityId: (value, values) =>
         (values.userType === UserType.Lead ||
           values.userType === UserType.CoreTeamMember ||
           values.userType === UserType.Facilitator) &&
         Number(value) > 0
           ? null
-          : "University must be selected",
+          : t('components:forms:register:validationMessages:selectUniversity'),
     },
   });
 
@@ -195,13 +210,14 @@ const RegisterForm = ({ universityData, userTypeData }: RegisterLeadProps) => {
   ));
 
   const confirmStrength = getConfirmStrength(
+    confirmRequirements,
     form.values.password,
     form.values.confirmPassword
   );
   const confirmColor =
     confirmStrength === 100 ? "teal" : confirmStrength >= 50 ? "yellow" : "red";
 
-  const strength = getStrength(form.values.password);
+  const strength = getStrength(requirements, form.values.password);
   const color = strength === 100 ? "teal" : strength > 50 ? "yellow" : "red";
 
   const navigate = useNavigate();
@@ -264,10 +280,10 @@ const RegisterForm = ({ universityData, userTypeData }: RegisterLeadProps) => {
     if (!res || isErrorResponse(res)) {
       notifications.show({
         id: "registration-fail",
-        title: "Registration failed!",
+        title: t('components:forms:register:registrationFailedTitle'),
         message: res
           ? res.msg
-          : "Something went wrong. Please try again later.",
+          : t('components:forms:register:registrationFailedMessage'),
         autoClose: 5000,
         withCloseButton: true,
         style: { backgroundColor: "red" },
@@ -281,8 +297,8 @@ const RegisterForm = ({ universityData, userTypeData }: RegisterLeadProps) => {
 
     notifications.show({
       id: "registration-success",
-      title: "Registration successful!",
-      message: "You have successfully registered! Please verify your email!",
+      title: t('components:forms:register:registrationSuccessTitle'),
+      message: t('components:forms:register:registrationSuccessMessage'),
       autoClose: 5000,
       withCloseButton: true,
       style: { backgroundColor: "green" },
@@ -298,16 +314,28 @@ const RegisterForm = ({ universityData, userTypeData }: RegisterLeadProps) => {
   return (
     <Stack spacing={"xl"}>
       <Title size="32px" align="center">
-        Register
+        {t('components:forms:register:title')}
       </Title>
       <form>
         <Flex direction={"column"} gap={"xs"}>
           <Flex direction={"row"} gap={"xs"}>
-            <TextInput label="Name" {...form.getInputProps("name")} />
-            <TextInput label="Surname" {...form.getInputProps("surname")} />
+            <TextInput 
+              label={t('components:forms:register:nameLabel')} 
+              {...form.getInputProps("name")} 
+            />
+            <TextInput 
+              label={t('components:forms:register:surnameLabel')} 
+              {...form.getInputProps("surname")} 
+            />
           </Flex>
-          <TextInput label="Username" {...form.getInputProps("username")} />
-          <TextInput label="Email" {...form.getInputProps("email")} />
+          <TextInput 
+              label={t('components:forms:register:usernameLabel')} 
+            {...form.getInputProps("username")} 
+          />
+          <TextInput 
+              label={t('components:forms:register:emailLabel')} 
+            {...form.getInputProps("email")} 
+          />
 
           <Popover
             opened={popoverOpened}
@@ -321,7 +349,7 @@ const RegisterForm = ({ universityData, userTypeData }: RegisterLeadProps) => {
                 onBlurCapture={() => setPopoverOpened(false)}
               >
                 <PasswordInput
-                  label="Password"
+                  label={t('components:forms:register:passwordLabel')}
                   {...form.getInputProps("password")}
                 />
               </div>
@@ -329,7 +357,7 @@ const RegisterForm = ({ universityData, userTypeData }: RegisterLeadProps) => {
             <Popover.Dropdown>
               <Progress color={color} value={strength} size={5} mb="xs" />
               <PasswordRequirement
-                label="Includes at least 6 characters"
+                label={t('components:forms:register:passwordRequirements:minLength')}
                 meets={form.values.password.length > 5}
               />
               {checks}
@@ -348,7 +376,7 @@ const RegisterForm = ({ universityData, userTypeData }: RegisterLeadProps) => {
                 onBlurCapture={() => setPopoverOpenedConfirm(false)}
               >
                 <PasswordInput
-                  label="Confirm Password"
+                  label={t('components:forms:register:confirmPasswordLabel')}
                   {...form.getInputProps("confirmPassword")}
                 />
               </div>
@@ -361,7 +389,7 @@ const RegisterForm = ({ universityData, userTypeData }: RegisterLeadProps) => {
                 mb="xs"
               />
               <PasswordRequirement
-                label="Includes at least 6 characters"
+                label={t('components:forms:register:passwordRequirements:minLength')}
                 meets={form.values.confirmPassword.length > 5}
               />
               {confirmChecks}
@@ -369,8 +397,8 @@ const RegisterForm = ({ universityData, userTypeData }: RegisterLeadProps) => {
           </Popover>
 
           <Select
-            label="User Type"
-            placeholder="Pick your user type"
+            label={t('components:forms:register:userTypeLabel')}
+            placeholder={t('components:forms:register:userTypePlaceholder')}
             itemComponent={UserTypeSelectItem}
             data={userTypeData}
             searchable
@@ -381,8 +409,8 @@ const RegisterForm = ({ universityData, userTypeData }: RegisterLeadProps) => {
             form.values.userType === UserType.CoreTeamMember ||
             form.values.userType === UserType.Facilitator) && (
             <Select
-              label="University"
-              placeholder="Pick your university"
+              label={t('components:forms:register:universityLabel')}
+              placeholder={t('components:forms:register:universityPlaceholder')}
               itemComponent={CustomUniversitySelectItem}
               data={universityData}
               searchable
@@ -391,10 +419,10 @@ const RegisterForm = ({ universityData, userTypeData }: RegisterLeadProps) => {
             />
           )}
           <Button onClick={onRegister} bg={primaryButtonColor}>
-            Register
+            {t('components:forms:register:registerButton')}
           </Button>
           <SubtleLinkButton to="/login" size="sm">
-            Already have an account? Login
+            {t('components:forms:register:loginPrompt')}
           </SubtleLinkButton>
         </Flex>
       </form>

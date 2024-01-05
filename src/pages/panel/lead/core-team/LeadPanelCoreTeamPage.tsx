@@ -1,4 +1,4 @@
-import { Button, Divider, Flex } from '@mantine/core';
+import { Button, Divider, Flex, Text } from '@mantine/core';
 import { IconGridDots, IconList } from '@tabler/icons-react';
 import useAxiosSecure from '../../../../hooks/auth/useAxiosSecure';
 import { useState } from 'react';
@@ -45,16 +45,20 @@ const LeadPanelCoreTeamPage = () => {
 	if (useGrid) {
 		content = (
 		<Flex direction="column" p="xs" gap="md">
+			<Text>Lead</Text>
 			<LeadGrid data={lead} isLoading={coreTeamLoading} />
 			<Divider />
+			<Text>Core Team</Text>
 			<CoreTeamMemberGrid data={members} isLoading={coreTeamLoading} />
 		</Flex>
 		);
 	} else {
 		content = (
-			<Flex direction="column" gap="md">
+			<Flex direction="column" pt="xs" pl="xs" gap="md">
+				<Text>Lead</Text>
 				<LeadTable data={lead} isLoading={coreTeamLoading} />
 				<Divider />
+				<Text>Core Team</Text>
 				<CoreTeamMemberTable data={members} isLoading={coreTeamLoading} />
 			</Flex>
 		);
