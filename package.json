@@ -36,7 +36,7 @@
     "axios": "^1.4.0",
     "chart.js": "^4.3.0",
     "dayjs": "^1.11.9",
-    "embla-carousel-react": "^8.0.0-rc18",
+    "embla-carousel-react": "^7.0.0",
     "i18next": "^23.7.16",
     "js-cookie": "^3.0.5",
     "leaflet": "^1.9.4",
