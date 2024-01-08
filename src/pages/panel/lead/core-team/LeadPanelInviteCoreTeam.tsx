@@ -1,11 +1,14 @@
 
+import { Container } from '@mantine/core';
 import InviteCoreTeamForm from '../../../../components/forms/panel/invitation/InviteCoreTeamForm';
 import { PageContainer } from '../../../../components/PageContainer';
 
 const LeadPanelInviteCoreTeam = () => {
 	return (
 		<PageContainer title="Invite to Core Team">
-			<InviteCoreTeamForm />
+			<Container size="sm">
+				<InviteCoreTeamForm />
+			</Container>
 		</PageContainer>
 	);
 };
